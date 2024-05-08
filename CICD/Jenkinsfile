@@ -41,11 +41,11 @@ pipeline {
 
             steps {
                     withSonarQubeEnv('sonarserver') {
-                    sh '''${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=mvnproject \
-                        -Dsonar.projectName='mvnproject' \
-                        -Dsonar.projectVersion=1.0 \
-                        -Dsonar.sources=src/ \
-                        -Dsonar.java.binaries=target/classes'''
+                    sh '''${scannerHome}/bin/sonar-scanner \
+                        -Dsonar.projectKey=Maven-Curd-Operations \
+                        -Dsonar.projectName='Maven-Curd-Operations' \
+                        -Dsonar.host.url=http://100.25.16.234:9000 \
+                        -Dsonar.token=sqp_a92a84e5288852cbf2de78a46867c6bec2e8a670'''
                     } 
 
             }
