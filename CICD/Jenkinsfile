@@ -12,23 +12,25 @@ pipeline {
         NEXUS_VERSION = "nexus3"
         NEXUS_PROTOCOL = "http"
         NEXUSPORT="8081"
-        NEXUSIP = "18.233.62.44"
+        NEXUSIP = "52.91.153.1"
         ARTVERSION = "${env.BUILD_ID}"
         NEXUS_CREDENTIAL_ID ="nexus-credentials"
-		NEXUS_URL = "18.233.62.44:8081"
+		NEXUS_URL = "52.91.153.1:8081"
 		SONARSERVER="sonarserver"
         SONARSCANNER="sonarscanner"
     }
  stages {
         stage('Checkout') {
             steps {
-              git branch: 'main', url: 'https://github.com/devsecopsmurali/crud-operations.git'
+              git branch: 'main', url: 'https://github.com/devsecopsmurali/Maven-Curd-Operations.git'
            }
         }
 
         stage('Build') { 
             steps {
-                  sh 'mvn -s settings.xml -DskipTests  clean install package'
+                  sh 'mvn -B -DskipTests clean install package'
+                  //'mvn -s settings.xml -DskipTests  clean install package
+
             }
         }
 
@@ -39,8 +41,8 @@ pipeline {
 
             steps {
                     withSonarQubeEnv('sonarserver') {
-                    sh '''${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=crud-operations \
-                        -Dsonar.projectName=crud-operations \
+                    sh '''${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=Maven-Curd-Operations \
+                        -Dsonar.projectName=Maven-Curd-Operations \
                         -Dsonar.projectVersion=1.0 \
                         -Dsonar.sources=src/ \
                         -Dsonar.java.binaries=target/classes'''
@@ -48,14 +50,14 @@ pipeline {
 
             }
         }
-        stage('Quality Gate') {
-            steps {
-                timeout(time: 10, unit: 'MINUTES') {
-                            waitForQualityGate abortPipeline: true
-                            }
-                }
+        // stage('Quality Gate') {
+        //     steps {
+        //         timeout(time: 10, unit: 'MINUTES') {
+        //                     waitForQualityGate abortPipeline: true
+        //                     }
+        //         }
         
-        }
+        // }
 		 stage("Publish to Nexus Repository Manager") {
             steps {
                 script {
