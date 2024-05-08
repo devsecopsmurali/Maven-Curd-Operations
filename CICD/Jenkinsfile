@@ -41,8 +41,8 @@ pipeline {
 
             steps {
                     withSonarQubeEnv('sonarserver') {
-                    sh '''${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=Maven-Curd-Operations \
-                        -Dsonar.projectName=Maven-Curd-Operations \
+                    sh '''${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=maven-curd-operations \
+                        -Dsonar.projectName=maven-curd-operations \
                         -Dsonar.projectVersion=1.0 \
                         -Dsonar.sources=src/ \
                         -Dsonar.java.binaries=target/classes'''
